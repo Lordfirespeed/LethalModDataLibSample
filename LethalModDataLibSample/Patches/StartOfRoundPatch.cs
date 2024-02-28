@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
+using Unity.Netcode;
 using Object = UnityEngine.Object;
 
 namespace LethalModDataLibSample.Patches;
@@ -16,7 +17,8 @@ public static class StartOfRoundPatch
         if (!__instance.IsOwner) return;
 
         try {
-            Object.Instantiate(Plugin.LastVisitedPlanetManagerPrefab, __instance.transform.GetParent());
+            var lastVisitedPlanetManager = Object.Instantiate(Plugin.LastVisitedPlanetManagerPrefab, __instance.transform.GetParent());
+            lastVisitedPlanetManager.GetComponent<NetworkObject>().Spawn();
         }
         catch (Exception exc) {
             Plugin.Logger.LogError($"Failed to instantiate last visited planet manager:\n{exc}");
