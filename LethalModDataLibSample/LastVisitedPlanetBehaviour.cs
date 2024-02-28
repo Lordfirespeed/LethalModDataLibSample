@@ -39,8 +39,15 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
         var thisIsInstance = ReferenceEquals(this, Instance);
         var instanceIsNull = ReferenceEquals(Instance, null);
 
-        Instance = this;
-        if (IsOwner) ModDataHandler.RegisterInstance(this);
+        if (instanceIsNull && !thisIsInstance) {
+            Instance = this;
+            if (IsOwner) ModDataHandler.RegisterInstance(this);
+        }
+
+        if (!instanceIsNull && !thisIsInstance) {
+            throw new InvalidOperationException($"{nameof(LastVisitedPlanetBehaviour)} has been instantiated more than once!");
+        }
+
         base.OnNetworkSpawn();
     }
 
