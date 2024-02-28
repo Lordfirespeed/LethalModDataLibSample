@@ -12,6 +12,8 @@ namespace LethalModDataLibSample;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency(LethalModDataLib.PluginInfo.PLUGIN_GUID, LethalModDataLib.PluginInfo.PLUGIN_VERSION)]
+[BepInDependency(LethalLib.MyPluginInfo.PLUGIN_GUID, LethalLib.MyPluginInfo.PLUGIN_VERSION)]
+[BepInDependency(LethalAPI.LibTerminal.PluginInfo.PLUGIN_GUID, LethalAPI.LibTerminal.PluginInfo.PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin
 {
     public static Plugin Instance { get; private set; } = null!;
