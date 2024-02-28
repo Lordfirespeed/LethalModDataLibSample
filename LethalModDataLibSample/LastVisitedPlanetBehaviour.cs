@@ -51,9 +51,9 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
         base.OnNetworkSpawn();
     }
 
-    public override void OnNetworkDespawn()
+    public override void OnDestroy()
     {
-        Plugin.Logger.LogInfo("Planet behaviour getting despawned");
+        Plugin.Logger.LogInfo("Planet behaviour getting destroyed");
         if (ReferenceEquals(Instance, this)) {
             Instance = null;
             if (IsOwner) ModDataHandler.DeRegisterInstance(this);
