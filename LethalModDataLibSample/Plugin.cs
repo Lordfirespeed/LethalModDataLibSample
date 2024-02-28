@@ -34,17 +34,17 @@ public class Plugin : BaseUnityPlugin
 
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
-    
+
     [UsedImplicitly]
     [TerminalCommand("LastPlanet")]
     [CommandInfo("See the name of the last planet the ship visited.")]
     public string LastPlanetCommand()
     {
-        if (LastVisitedPlanetBehaviour.Instance is not { } lastVisitedPlanetBehaviourInstance) 
+        if (LastVisitedPlanetBehaviour.Instance is not { } lastVisitedPlanetBehaviourInstance)
             throw new InvalidOperationException($"{nameof(LastVisitedPlanetBehaviour)} has not been instantiated.", new NullReferenceException());
 
         var lastVisitedPlanet = lastVisitedPlanetBehaviourInstance.SyncedLastVisitedPlanet.Value;
-        
+
         if (lastVisitedPlanet is null) return "The ship hasn't landed anywhere yet!\n\n";
         return $"The ship last landed on {lastVisitedPlanet}.\n\n";
     }
@@ -53,7 +53,7 @@ public class Plugin : BaseUnityPlugin
     {
         var inactiveContainer = new GameObject("Inactive Prefab Container");
         inactiveContainer.SetActive(false);
-        
+
         LastVisitedPlanetManagerPrefab = LethalLib.Modules.NetworkPrefabs.CreateNetworkPrefab("Last Visited Planet Manager");
         LastVisitedPlanetManagerPrefab.transform.SetParent(inactiveContainer.transform);
         LastVisitedPlanetManagerPrefab.AddComponent<LastVisitedPlanetBehaviour>();
@@ -64,7 +64,7 @@ public class Plugin : BaseUnityPlugin
         _commandRegistry = TerminalRegistry.CreateTerminalRegistry();
         _commandRegistry.RegisterFrom(this);
     }
-    
+
     private void Patch()
     {
         _harmony ??= new Harmony(MyPluginInfo.PLUGIN_GUID);
@@ -82,12 +82,12 @@ public class Plugin : BaseUnityPlugin
             Logger.LogDebug("Nothing to unpatch.");
             return;
         }
-        
+
         Logger.LogDebug("Unpatching...");
 
         _harmony.UnpatchSelf();
 
         Logger.LogDebug("Finished Unpatching!");
     }
-    
+
 }
