@@ -17,7 +17,7 @@ public static class StartOfRoundPatch
         if (!__instance.IsOwner) return;
 
         try {
-            var lastVisitedPlanetManager = Object.Instantiate(Plugin.LastVisitedPlanetManagerPrefab, __instance.transform.GetParent());
+            var lastVisitedPlanetManager = Object.Instantiate(Plugin.LastVisitedPlanetManagerPrefab, __instance.transform);
             lastVisitedPlanetManager.GetComponent<NetworkObject>().Spawn();
         }
         catch (Exception exc) {
