@@ -43,7 +43,7 @@ public class Plugin : BaseUnityPlugin
         if (LastVisitedPlanetBehaviour.Instance is not { } lastVisitedPlanetBehaviourInstance)
             throw new InvalidOperationException($"{nameof(LastVisitedPlanetBehaviour)} has not been instantiated.", new NullReferenceException());
 
-        var lastVisitedPlanet = lastVisitedPlanetBehaviourInstance.SyncedLastVisitedPlanet.Value;
+        var lastVisitedPlanet = lastVisitedPlanetBehaviourInstance.LastVisitedPlanet;
 
         if (lastVisitedPlanet is null) return "The ship hasn't landed anywhere yet!\n\n";
         return $"The ship last landed on {lastVisitedPlanet}.\n\n";

@@ -20,6 +20,6 @@ public class RoundManagerPatch
             return;
         }
 
-        lastVisitedPlanetBehaviourInstance.SyncedLastVisitedPlanet.Value = __instance.currentLevel.PlanetName;
+        lastVisitedPlanetBehaviourInstance.LastVisitedPlanet = __instance.currentLevel.PlanetName;
     }
 }

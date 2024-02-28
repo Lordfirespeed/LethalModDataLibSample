@@ -17,12 +17,12 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
     // also, please add XML doc comments. Set `<GenerateDocumentationFile>true</GenerateDocumentationFile>` in MSBuild to enforce their existence for public types and members
     [UsedImplicitly]
     [ModData(SaveWhen.OnAutoSave, LoadWhen.OnLoad, SaveLocation.CurrentSave)]
-    private string? LastVisitedPlanet {
-        get => SyncedLastVisitedPlanet.Value.ToString();
-        set => SyncedLastVisitedPlanet.Value = value;
+    public string? LastVisitedPlanet {
+        get => _lastVisitedPlanet.Value.ToString();
+        internal set => _lastVisitedPlanet.Value = value;
     }
 
-    public NetworkVariable<FixedString64Bytes?> SyncedLastVisitedPlanet { get; } = new();
+    private readonly NetworkVariable<FixedString64Bytes?> _lastVisitedPlanet = new();
 
     public override void OnNetworkSpawn()
     {
