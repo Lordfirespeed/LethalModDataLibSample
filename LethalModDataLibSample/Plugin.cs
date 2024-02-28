@@ -55,7 +55,6 @@ public class Plugin : BaseUnityPlugin
         inactiveContainer.SetActive(false);
 
         LastVisitedPlanetManagerPrefab = LethalLib.Modules.NetworkPrefabs.CreateNetworkPrefab("Last Visited Planet Manager");
-        LastVisitedPlanetManagerPrefab.hideFlags = HideFlags.None;
         Logger.LogWarning("Ignore the following error r.e. 'NetworkManager is not listening'. NetCode is a big whiny baby.");
         LastVisitedPlanetManagerPrefab.transform.SetParent(inactiveContainer.transform);
         LastVisitedPlanetManagerPrefab.AddComponent<LastVisitedPlanetBehaviour>();

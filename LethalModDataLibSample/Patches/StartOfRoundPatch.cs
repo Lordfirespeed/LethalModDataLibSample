@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using HarmonyLib;
 using Unity.Netcode;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace LethalModDataLibSample.Patches;
@@ -18,6 +19,7 @@ public static class StartOfRoundPatch
 
         try {
             var lastVisitedPlanetManager = Object.Instantiate(Plugin.LastVisitedPlanetManagerPrefab, __instance.transform);
+            lastVisitedPlanetManager.hideFlags = HideFlags.None;
             lastVisitedPlanetManager.GetComponent<NetworkObject>().Spawn();
         }
         catch (Exception exc) {
