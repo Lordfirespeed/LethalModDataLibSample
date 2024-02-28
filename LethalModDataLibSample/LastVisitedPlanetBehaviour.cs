@@ -30,6 +30,13 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
         }
     }
 
+    [UsedImplicitly]
+    [ModData(SaveWhen.OnAutoSave, LoadWhen.OnLoad, SaveLocation.CurrentSave)]
+    private bool LastVisitedPlanetHasValue {
+        get => _lastVisitedPlanetHasValue.Value;
+        set => _lastVisitedPlanetHasValue.Value = value;
+    }
+
     private readonly NetworkVariable<bool> _lastVisitedPlanetHasValue = new() { Value = false, };
 
     private readonly NetworkVariable<FixedString64Bytes> _lastVisitedPlanet = new() { Value = "" };
