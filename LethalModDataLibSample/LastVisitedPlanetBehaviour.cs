@@ -18,8 +18,11 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
     [UsedImplicitly]
     [ModData(SaveWhen.OnAutoSave, LoadWhen.OnLoad, SaveLocation.CurrentSave)]
     public string? LastVisitedPlanet {
-        get => _lastVisitedPlanet.Value.ToString();
-        internal set => _lastVisitedPlanet.Value = new FixedString64Bytes(value);
+        get => _lastVisitedPlanet.Value?.ToString();
+        internal set {
+            if (value is null) _lastVisitedPlanet.Value = null;
+            _lastVisitedPlanet.Value = new FixedString64Bytes(value);
+        }
     }
 
     private readonly NetworkVariable<FixedString64Bytes?> _lastVisitedPlanet = new();
