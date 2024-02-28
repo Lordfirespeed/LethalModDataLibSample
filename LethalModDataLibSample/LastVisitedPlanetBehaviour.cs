@@ -18,19 +18,26 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
     [UsedImplicitly]
     [ModData(SaveWhen.OnAutoSave, LoadWhen.OnLoad, SaveLocation.CurrentSave)]
     public string? LastVisitedPlanet {
-        get => _lastVisitedPlanet.Value?.ToString();
+        get => _lastVisitedPlanetHasValue.Value ? _lastVisitedPlanet.Value.Value : null;
         internal set {
-            if (value is null) _lastVisitedPlanet.Value = null;
+            if (value is null) {
+                _lastVisitedPlanetHasValue.Value = false;
+                return;
+            }
+
+            _lastVisitedPlanetHasValue.Value = true;
             _lastVisitedPlanet.Value = new FixedString64Bytes(value);
         }
     }
 
-    private readonly NetworkVariable<FixedString64Bytes?> _lastVisitedPlanet = new();
+    private readonly NetworkVariable<bool> _lastVisitedPlanetHasValue = new() { Value = false, };
+
+    private readonly NetworkVariable<FixedString64Bytes> _lastVisitedPlanet = new() { Value = "" };
 
     public override void OnNetworkSpawn()
     {
-        if (Instance is not null)
-            throw new InvalidOperationException($"{nameof(LastVisitedPlanetBehaviour)} has already been instantiated!");
+        var thisIsInstance = ReferenceEquals(this, Instance);
+        var instanceIsNull = ReferenceEquals(Instance, null);
 
         Instance = this;
         if (IsOwner) ModDataHandler.RegisterInstance(this);
