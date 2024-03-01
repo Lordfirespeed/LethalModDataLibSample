@@ -3,6 +3,8 @@ using JetBrains.Annotations;
 using LethalModDataLib.Attributes;
 using LethalModDataLib.Enums;
 using LethalModDataLib.Features;
+using LethalModDataLib.Helpers;
+using LethalModDataLib.Interfaces;
 using Unity.Collections;
 using Unity.Netcode;
 
@@ -30,12 +32,7 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
         }
     }
 
-    [UsedImplicitly]
-    [ModData(SaveWhen.OnAutoSave, LoadWhen.OnLoad, SaveLocation.CurrentSave)]
-    private bool LastVisitedPlanetHasValue {
-        get => _lastVisitedPlanetHasValue.Value;
-        set => _lastVisitedPlanetHasValue.Value = value;
-    }
+    private static readonly IModDataKey LastVisitedPlanetDataKey = ModDataHelper.GetIModDataKey(typeof(LastVisitedPlanetBehaviour), nameof(LastVisitedPlanet))!;
 
     private readonly NetworkVariable<bool> _lastVisitedPlanetHasValue = new() { Value = false, };
 
@@ -49,6 +46,8 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
         if (instanceIsNull && !thisIsInstance) {
             Instance = this;
             if (IsOwner) ModDataHandler.RegisterInstance(this);
+
+            SaveLoadHandler.LoadData(LastVisitedPlanetDataKey);
         }
 
         if (!instanceIsNull && !thisIsInstance) {
