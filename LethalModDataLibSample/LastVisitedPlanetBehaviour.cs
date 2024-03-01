@@ -43,10 +43,11 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
 
         if (instanceIsNull && !thisIsInstance) {
             Instance = this;
-            if (IsOwner) ModDataHandler.RegisterInstance(this);
-
-            IModDataKey lastVisitedPlanetDataKey = ModDataHelper.GetIModDataKey(this, nameof(LastVisitedPlanet))!;
-            SaveLoadHandler.LoadData(lastVisitedPlanetDataKey);
+            if (IsOwner) {
+                ModDataHandler.RegisterInstance(this);
+                IModDataKey lastVisitedPlanetDataKey = ModDataHelper.GetIModDataKey(this, nameof(LastVisitedPlanet))!;
+                SaveLoadHandler.LoadData(lastVisitedPlanetDataKey);
+            }
         }
 
         if (!instanceIsNull && !thisIsInstance) {
