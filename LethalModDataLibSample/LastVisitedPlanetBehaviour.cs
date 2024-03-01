@@ -32,8 +32,6 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
         }
     }
 
-    private static readonly IModDataKey LastVisitedPlanetDataKey = ModDataHelper.GetIModDataKey(typeof(LastVisitedPlanetBehaviour), nameof(LastVisitedPlanet))!;
-
     private readonly NetworkVariable<bool> _lastVisitedPlanetHasValue = new() { Value = false, };
 
     private readonly NetworkVariable<FixedString64Bytes> _lastVisitedPlanet = new() { Value = "" };
@@ -47,7 +45,8 @@ public class LastVisitedPlanetBehaviour : NetworkBehaviour
             Instance = this;
             if (IsOwner) ModDataHandler.RegisterInstance(this);
 
-            SaveLoadHandler.LoadData(LastVisitedPlanetDataKey);
+            IModDataKey lastVisitedPlanetDataKey = ModDataHelper.GetIModDataKey(this, nameof(LastVisitedPlanet))!;
+            SaveLoadHandler.LoadData(lastVisitedPlanetDataKey);
         }
 
         if (!instanceIsNull && !thisIsInstance) {
